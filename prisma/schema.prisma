@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum RoleName {
+  ADMIN
+  USER
+  BASIC
+  ROLE1
+  ROLE2
+  ROLE3
+  ROLE4
+  ROLE5
+}
+
+enum AppType {
+  I // Retrieval App
+  M // Maintainer App
+  R // Report App
+  P // Web Page
+  O // Other App
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  name String @unique
+  email String @unique
+  password String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  roles Role[] @relation("UserRoles")
+  @@map("User")
+}
+
+model Role {
+  id Int @id @default(autoincrement())
+  name String @unique
+  description String
+  users User[] @relation("UserRoles")
+  apps AppSec[] @relation("RoleApps")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("Role")
+}
+
+model AppSec {
+  id Int @id @default(autoincrement())
+  name String
+  url String @default("")
+  directory String @default("")
+  type AppType
+  number Int
+  description String
+  roles Role[] @relation("RoleApps")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("AppSec")
+}
