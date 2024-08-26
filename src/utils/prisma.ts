@@ -47,8 +47,3 @@ export const createRole = async (name: string, desc: string) =>
       description: desc,
     },
   });
-// export const checkAppSecByUrl = async (path: string) =>
-//   await prismaClient.appSec.findFirst({
-//     where: { url: path },
-//     include: { roles: true }, // include roles for the app
-//   });

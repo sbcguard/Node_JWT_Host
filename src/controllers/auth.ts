@@ -19,7 +19,12 @@ export const signup = async (
   next: NextFunction
 ) => {
   //TODO: Add custom returns for failed signup details
-  SignupSchema.parse(req.body);
+  const validation = SignupSchema.safeParse(req.body);
+  if (!validation.success) {
+    const errors = validation.error.issues.map((err) => err.message);
+    logger.error(`Signup attempt failed: ${req.body} Issues: ${errors}`);
+    return res.status(400).json({ errors: errors });
+  }
   const { email, password, name } = req.body;
   // Create a search object
   const searchParams = {
@@ -54,7 +59,7 @@ export const signup = async (
 
   logger.info(`Signup attempt: email=${email}, status=success`);
 
-  res.json(user);
+  return res.json(user);
 };
 export const login = async (
   req: Request,

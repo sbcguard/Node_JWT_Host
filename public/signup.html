@@ -87,7 +87,7 @@
     <script>
       document
         .getElementById('signupForm')
-        .addEventListener('submit', async function (event) {
+        .addEventListener('submit', async (event) => {
           event.preventDefault();
 
           const name = document.getElementById('username').value;
@@ -105,13 +105,14 @@
             });
 
             if (!response.ok) {
-              throw new Error('Sign up failed');
+              const data = await response.json();
+              throw new Error(data.errors.join('<br>'));
             }
 
             alert('Sign up successful! You can now log in.');
             window.location.href = '/login.html'; // Redirect to login page after successful signup
           } catch (error) {
-            document.getElementById('error').textContent = error.message;
+            document.getElementById('error').innerHTML = error.message;
           }
         });
     </script>
