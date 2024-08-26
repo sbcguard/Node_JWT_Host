@@ -18,7 +18,6 @@ export const signup = async (
   res: Response,
   next: NextFunction
 ) => {
-  //TODO: Add custom returns for failed signup details
   const validation = SignupSchema.safeParse(req.body);
   if (!validation.success) {
     const errors = validation.error.issues.map((err) => err.message);
