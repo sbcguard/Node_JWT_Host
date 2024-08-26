@@ -10,7 +10,11 @@
     "dev": "npx nodemon src/index.ts",
     "build": "tsc"
   },
-  "keywords": [],
+  "keywords": [
+    "host",
+    "jwt",
+    "node"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
